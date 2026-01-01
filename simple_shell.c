@@ -1,73 +1,36 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include <sys/wait.h>
+#include "shell.h"
 
-extern char **environ;
+/**
+ * main - function that runs simple shell's logic
+ * @argc: number of arguments given
+ * @argv: list of arguments given
+ * Return: 0 on success or NULL on fail
+ */
 
-#define MAX_INPUT 1024
-#define MAX_ARGS  64
-
-int main(int argc, char *argv[])
+int main(int argc, char **argv)
 {
-char input[MAX_INPUT];
-char *args[MAX_ARGS];
-pid_t pid;
-int status;
-int i;
+char *line = NULL;
+char **args = NULL;
 
 (void)argc;
 (void)argv;
 
 while (1)
 {
-printf("simple_shell$ ");
-fflush(stdout);
-
-if (fgets(input, MAX_INPUT, stdin) == NULL)
+print_prompt();
+line = read_input();
+if (!line)
 {
-printf("\n");
 break;
 }
 
-input[strcspn(input, "\n")] = '\0';
-
-if (input[0] == '\0')
-continue;
-
-i = 0;
-args[i] = strtok(input, " ");
-while (args[i] && i < MAX_ARGS - 1)
+args = strtoken(line);
+if (args)
 {
-i++;
-args[i] = strtok(NULL, " ");
+run_command(args);
 }
-args[i] = NULL;
-
-if (strcmp(args[0], "exit") == 0)
-break;
-
-pid = fork();
-if (pid == 0)
-{
-
-if (execve(args[0], args, environ) == -1)
-{
-perror(argv[0]);
-exit(1);
+free(line);
+free_args(args);
 }
-}
-else if (pid > 0)
-{
-
-wait(&status);
-}
-else
-{
-perror("fork failed");
-}
-}
-
 return (0);
 }
