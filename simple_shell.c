@@ -1,31 +1,36 @@
-#include <stdio.h>              /* Standard I/O library for printf and fgets */
-#include <string.h>             /* String handling library for strcmp */
-#include <unistd.h>             /* POSIX library (commonly used in shells) */
+#include "shell.h"
 
-#define MAX_INPUT 1024          /* Defines the maximum size of user input */
+/**
+ * main - function that runs simple shell's logic
+ * @argc: number of arguments given
+ * @argv: list of arguments given
+ * Return: 0 on success or NULL on fail
+ */
 
-int main()                      /* Entry point of the program */
+int main(int argc, char **argv)
 {
-    char input[MAX_INPUT];     /* Buffer to store user input */
+char *line = NULL;
+char **args = NULL;
 
-    while (1)                  /* Infinite loop to keep the shell running */
-    {
-        printf("simple_shell:$"); /* Displays the shell prompt */
-        fflush(stdout);        /* Flushes output buffer to show prompt immediately */
+(void)argc;
+(void)argv;
 
-        if (fgets(input, MAX_INPUT, stdin) == (void *)0) /* Reads input from standard input */
-        {
-            perror("fgets failed"); /* Prints error message if fgets fails */
-            continue;           /* Skips to the next loop iteration */
-        }
+while (1)
+{
+print_prompt();
+line = read_input();
+if (!line)
+{
+break;
+}
 
-        printf("%s", input);   /* Prints back the user input (echo behavior) */
-
-        if (strcmp(input, "exit\n") == 0) /* Compares input to "exit\n" */
-        {
-            break;              /* Exits the loop if user types "exit" */
-        }
-    }
-
-    return (0);                 /* Ends the program successfully */
+args = strtoken(line);
+if (args)
+{
+run_command(args);
+}
+free(line);
+free_args(args);
+}
+return (0);
 }
