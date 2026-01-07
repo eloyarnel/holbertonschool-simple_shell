@@ -7,6 +7,7 @@
 #include <sys/wait.h>
 #define MAX_INPUT 1024
 #define MAX_ARGS 64
+extern char **environ;
 
 void print_prompt(void);
 char *get_input(void);
