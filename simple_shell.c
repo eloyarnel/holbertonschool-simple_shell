@@ -18,7 +18,7 @@ char **args = NULL;
 while (1)
 {
 print_prompt();
-line = read_input();
+line = get_input();
 if (!line)
 {
 break;
