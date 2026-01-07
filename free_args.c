@@ -8,5 +8,17 @@
 
 void free_args(char **args)
 {
+int i = 0;
 
+if (args == NULL)
+return;
+
+while (args[i] != NULL)
+{
+if (args[i] != NULL)
+free(args[i]);
+i++;
+}
+
+free(args);
 }
