@@ -8,17 +8,8 @@
 
 void free_args(char **args)
 {
-int i = 0;
+    if (!args)
+        return;
 
-if (args == NULL)
-return;
-
-while (args[i] != NULL)
-{
-if (args[i] != NULL)
-free(args[i]);
-i++;
-}
-
-free(args);
+    free(args);
 }
