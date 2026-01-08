@@ -14,5 +14,7 @@ char *get_input(void);
 char **strtoken(char *line);
 void run_command(char **args);
 void free_args(char **args);
+void builtin_env(void);
+char *build_cmd_path(char *args);
 
 #endif /*SHELL_H*/
