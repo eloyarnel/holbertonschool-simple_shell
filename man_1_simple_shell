@@ -1,0 +1,71 @@
+.\" Manpage for simple_shell
+.TH SIMPLE_SHELL 1 "2026-01-08" "v1.0" "User Commands"
+.SH NAME
+simple_shell \- a simple UNIX command line interpreter
+.SH SYNOPSIS
+.B simple_shell
+.SH DESCRIPTION
+simple_shell is a basic UNIX command line interpreter written in C.
+It allows users to execute commands, interact with the operating
+system, and manage processes in a manner similar to standard shells.
+
+The shell reads commands from standard input, parses them into tokens,
+searches for executable files using the PATH environment variable,
+and executes them using \fIfork()\fR and \fIexecve()\fR. After execution, the
+shell waits for the child process to complete before displaying
+the prompt again.
+
+simple_shell supports both interactive and non-interactive modes.
+.SH FEATURES
+.TP
+Displays a custom prompt and waits for user input
+.TP
+Executes commands with or without arguments
+.TP
+Searches for executables using the PATH environment variable
+.TP
+Handles built-in commands
+.TP
+Handles the End Of File (EOF) condition (Ctrl + D)
+.TP
+Prints meaningful error messages for invalid commands
+.SH BUILT-IN COMMANDS
+.TP
+.B exit
+Terminates the shell.
+.TP
+.B env
+Prints the current environment variables.
+.SH USAGE
+To start the shell, run:
+
+.nf
+./simple_shell
+.fi
+
+Once running, type any valid UNIX command followed by optional
+arguments and press Enter.
+.SH EXAMPLES
+.TP
+List files in the current directory:
+.nf
+ls
+.fi
+.TP
+Display the current working directory:
+.nf
+pwd
+.fi
+.TP
+Print environment variables:
+.nf
+env
+.fi
+.TP
+Exit the shell:
+.nf
+exit
+.fi
+.SH AUTHORS
+Eloy A. Alicea Sanchez \- https://github.com/eloyarnel \\
+Natanael Ortiz Lugo \- https://github.com/Fooxii
